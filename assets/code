@@ -1,2 +1,57 @@
+import streamlit as st
 import os
-st.write(os.listdir("assets"))
+from PIL import Image
+
+# =========================
+# PAGE CONFIG
+# =========================
+st.set_page_config(
+    page_title="AI Analytics Dashboard",
+    page_icon="📊",
+    layout="wide"
+)
+
+# =========================
+# SIDEBAR LOGO (SAFE VERSION)
+# =========================
+st.sidebar.title("📊 Dashboard")
+
+logo_path = "assets/logo.png"
+
+def load_logo(path):
+    try:
+        if os.path.exists(path):
+            return Image.open(path)
+        return None
+    except Exception:
+        return None
+
+logo = load_logo(logo_path)
+
+if logo is not None:
+    st.sidebar.image(logo, width=180)
+else:
+    st.sidebar.warning("⚠️ Logo not found or invalid image file")
+
+# =========================
+# MAIN CONTENT
+# =========================
+st.title("🚀 AI Analytics Platform")
+
+st.markdown("""
+Welcome to your **AI Analytics Dashboard**.
+
+- 📊 Country Analysis
+- 🤖 AI Maturity Scoring
+- 🔮 Predictive Analytics
+- 📈 Business Insights
+""")
+
+# =========================
+# DEBUG OPTION (OPTIONAL)
+# =========================
+with st.expander("🔍 Debug Assets Folder"):
+    if os.path.exists("assets"):
+        st.write(os.listdir("assets"))
+    else:
+        st.error("Assets folder not found")
